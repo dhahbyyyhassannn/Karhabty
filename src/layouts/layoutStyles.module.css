@@ -1,0 +1,61 @@
+/*=====================================*/
+/* Styles for the navbar menu */
+/*=====================================*/
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
+.navbarLogoContainer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.navbarLogo {
+    width: 80px;
+    height: 80px;
+}
+
+.linksContainer {
+    display: flex;
+    gap: 20px;
+}
+
+.buttonsContainer {
+    display: flex;
+    gap: 20px;
+}
+
+/*=====================================*/
+/* Styles for the main informations */
+/*=====================================*/
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+.welcoming {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 48px;
+    color: #202940;
+}
+
+.mainText  {
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 36px;
+    color: #F2EAE0;
+}
+
+.slogan {
+    font-family: 'Cinzel', serif;
+    font-size: 68px;
+    color: #000000;
+}
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400..900&display=swap');
+.extra {
+    font-family: 'Cinzel', serif;
+    font-size: 68px;
+    color: #F7C85C;
+}
