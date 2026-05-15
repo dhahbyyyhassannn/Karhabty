@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { login } from '../component/auth';
+import './AuthPages.css';
 
 export default function SignIn() {
   const [email, setEmail] = useState('');
@@ -25,20 +26,35 @@ export default function SignIn() {
   };
 
   return (
-    <div style={{padding:20}}>
-      <h2>Se connecter</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Email</label>
-          <input value={email} onChange={(e)=>setEmail(e.target.value)} type="email" />
+    <div className="signin-container">
+      <div className="signin-box">
+        <h2>Se connecter</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>Email</label>
+            <input 
+              value={email} 
+              onChange={(e)=>setEmail(e.target.value)} 
+              type="email"
+              placeholder="Votre email"
+            />
+          </div>
+          <div className="form-group">
+            <label>Mot de passe</label>
+            <input 
+              value={password} 
+              onChange={(e)=>setPassword(e.target.value)} 
+              type="password"
+              placeholder="Votre mot de passe"
+            />
+          </div>
+          <button type="submit">Se connecter</button>
+          {error && <div className="error-message">{error}</div>}
+        </form>
+        <div className="signin-link">
+          Pas encore inscrit? <Link to="/signup">S'inscrire</Link>
         </div>
-        <div>
-          <label>Mot de passe</label>
-          <input value={password} onChange={(e)=>setPassword(e.target.value)} type="password" />
-        </div>
-        <button type="submit">Se connecter</button>
-        {error && <div style={{color:'red'}}>{error}</div>}
-      </form>
+      </div>
     </div>
   );
 }

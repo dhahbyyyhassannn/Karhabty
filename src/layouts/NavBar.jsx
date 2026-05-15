@@ -1,6 +1,7 @@
 import NavBarMenuLink from "../component/Links/NavbarMenuLink";
 import logo from '../assets/Logo Karhabty.png';
 import styles from './layoutStyles.module.css'
+import { Link } from 'react-router-dom';
 export default function NavBar() {
     return (
         <div className={styles.navbar}>
@@ -10,17 +11,17 @@ export default function NavBar() {
             </div>
             <div className={styles.linksContainer}>
                 <NavBarMenuLink linkName="Home" linkPath="/" />
-                <NavBarMenuLink linkName="About" linkPath="/about" />
-                <NavBarMenuLink linkName="Services" linkPath="/services" />
-                <NavBarMenuLink linkName="Contact" linkPath="/contact" />
+                <NavBarMenuLink linkName="Rent a Car" linkPath="/rent" />
+                <NavBarMenuLink linkName="Sell a Car" linkPath="/sell" />
+                <NavBarMenuLink linkName="Services" linkPath="/#services" />
             </div>
             <div className={styles.buttonsContainer}>
-                <button className="btn btn-warning" link="/signup">
+                <Link className="btn btn-warning" to="/signup">
                     Register
-                </button>
-                <button className="btn btn-outline-warning" link="/signin">
+                </Link>
+                <Link className="btn btn-outline-warning" to="/signin">
                     Login
-                </button>
+                </Link>
             </div>
         </div>
         

@@ -39,6 +39,37 @@ export function logout() {
   localStorage.removeItem('token');
 }
 
+async function submitVehicleListing(endpoint, payload) {
+  const token = getToken();
+
+  if (!token) {
+    throw new Error('You need to sign in before submitting a vehicle listing');
+  }
+
+  try {
+    const { data } = await axios.post(`${API_BASE}${endpoint}`, payload, {
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return data;
+  } catch (error) {
+    const message = error.response?.data?.message || error.response?.data?.error || 'Vehicle listing submission failed';
+    throw new Error(message);
+  }
+}
+
+export function submitSaleVehicle(payload) {
+  return submitVehicleListing('/vehicules/vente', payload);
+}
+
+export function submitRentalVehicle(payload) {
+  return submitVehicleListing('/vehicules/location', payload);
+}
+
 const auth = { login, signup, getToken, logout };
 
 export default auth;

@@ -2,30 +2,29 @@ import styles from './layoutStyles.module.css';
 
 export default function MainInformations() {
     return (
-        <div>
-            <div>
-                <h1 className={styles.welcoming}>
-                    Welcome to Karhabty
-                </h1>
-                <h3 className={styles.mainText}>
-                    you can rent, sell or buy a car with us
-                </h3>
-                <h3 className={styles.mainText}>
-                    with best prices and best services
-                </h3>
-                <h3 className={styles.mainText}>
-                    find your dream car with us and
-                </h3>
+        <div className={styles.heroContent}>
+            <div className={styles.heroEyebrow}>Premium Car Rental and Sales</div>
+            <h1 className={styles.welcoming}>
+                Find the right car for every road, trip, and budget.
+            </h1>
+            <h3 className={styles.mainText}>
+                Rent with confidence, buy with clarity, and enjoy a seamless experience from search to checkout.
+            </h3>
+            <h3 className={styles.mainText}>
+                Karhabty brings together trusted cars, smart pricing, and a polished service built around you.
+            </h3>
+            <div className={styles.heroHighlights}>
+                <span className={styles.heroChip}>Flexible rentals</span>
+                <span className={styles.heroChip}>Verified listings</span>
+                <span className={styles.heroChip}>Fast booking</span>
+                <span className={styles.heroChip}>Premium support</span>
             </div>
-            <div>
-                <h3 className={styles.slogan}>
-                    drive the
-                </h3>
-                <h3 className={styles.extra}>
-                    extraordinary
-                </h3>
-                
-            </div>
+            <h3 className={styles.slogan}>
+                Drive the
+            </h3>
+            <h3 className={styles.extra}>
+                extraordinary
+            </h3>
         </div>
     )
 }

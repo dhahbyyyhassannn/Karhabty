@@ -1,0 +1,97 @@
+:root {
+    --bg-ivory: #f3efe6;
+    --bg-sand: #ebe2d2;
+    --bg-gold: #ddb23a;
+    --bg-caramel: #b46a2a;
+    --bg-brown: #8f471a;
+    --text-dark: #2a221c;
+    --text-light: #fffaf2;
+    --glass: rgba(255, 250, 242, 0.14);
+    --glass-strong: rgba(255, 250, 242, 0.2);
+    --border-soft: rgba(255, 250, 242, 0.22);
+    --shadow-soft: 0 18px 50px rgba(42, 34, 28, 0.18);
+    --accent-gradient: linear-gradient(135deg, var(--bg-gold), var(--bg-caramel));
+    --accent-gradient-strong: linear-gradient(135deg, var(--bg-caramel), var(--bg-brown));
+    --page-gradient: linear-gradient(135deg, rgba(243, 239, 230, 0.94), rgba(235, 226, 210, 0.9));
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    color: var(--text-dark);
+    background:
+        radial-gradient(circle at top left, rgba(221, 178, 58, 0.15), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(180, 106, 42, 0.13), transparent 28%),
+        var(--bg-ivory);
+    font-family: 'Noto Sans', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.3px;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn-warning {
+    background: var(--accent-gradient);
+    color: var(--text-light);
+    box-shadow: 0 10px 24px rgba(180, 106, 42, 0.22);
+}
+
+.btn-warning:hover {
+    box-shadow: 0 14px 28px rgba(180, 106, 42, 0.3);
+}
+
+.btn-outline-warning {
+    background: rgba(255, 250, 242, 0.08);
+    color: var(--text-light);
+    border: 1px solid rgba(255, 250, 242, 0.35);
+    backdrop-filter: blur(8px);
+}
+
+.btn-outline-warning:hover {
+    background: rgba(255, 250, 242, 0.16);
+    border-color: rgba(255, 250, 242, 0.55);
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(42, 34, 28, 0.08);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, var(--bg-gold), var(--bg-brown));
+    border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, var(--bg-brown), var(--bg-gold));
+}
