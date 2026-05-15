@@ -15,10 +15,10 @@ export default function NavBar() {
                 <NavBarMenuLink linkName="Contact" linkPath="/contact" />
             </div>
             <div className={styles.buttonsContainer}>
-                <button className="btn btn-warning">
+                <button className="btn btn-warning" link="/signup">
                     Register
                 </button>
-                <button className="btn btn-outline-warning">
+                <button className="btn btn-outline-warning" link="/signin">
                     Login
                 </button>
             </div>
