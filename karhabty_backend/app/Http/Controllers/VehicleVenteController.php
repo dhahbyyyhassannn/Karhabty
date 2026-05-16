@@ -28,6 +28,7 @@ class VehicleVenteController extends Controller
             'image' => 'required',
             'prix_vente' => 'required',
             'negociable' => 'sometimes',
+            'societe_id' => 'sometimes|nullable|integer|exists:societes,id',
         ]);
         $VehicleVente = new VehiculeVente();
         $VehicleVente->matricule = $request->matricule;
@@ -45,6 +46,7 @@ class VehicleVenteController extends Controller
         $VehicleVente->image = $request->image;
         $VehicleVente->prix_vente = $request->prix_vente;
         $VehicleVente->negociable = $request->negociable;
+        $VehicleVente->societe_id = $request->input('societe_id');
         $VehicleVente->id = Auth::id();
         $VehicleVente->save();
         return response()->json([

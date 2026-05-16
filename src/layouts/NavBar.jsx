@@ -6,15 +6,29 @@ import styles from './layoutStyles.module.css'
 
 export default function NavBar() {
     const [userName, setUserName] = useState('');
+    const [companyName, setCompanyName] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
         const token = localStorage.getItem('token');
         const name = localStorage.getItem('userName');
+        const storedCompany = localStorage.getItem('societe');
+
         if (token && name) {
             setUserName(name);
         } else {
             setUserName('');
+        }
+
+        if (storedCompany) {
+            try {
+                const company = JSON.parse(storedCompany);
+                setCompanyName(company.name || 'Company');
+            } catch {
+                setCompanyName('Company');
+            }
+        } else {
+            setCompanyName('');
         }
     }, []);
 
@@ -36,6 +50,9 @@ export default function NavBar() {
                 <NavBarMenuLink linkName="Home" to="/" />
                 <NavBarMenuLink linkName="Rent a Car" to="/rent" />
                 <NavBarMenuLink linkName="Sell a Car" to="/sell" />
+                <NavBarMenuLink linkName="Company" to="/societe/signin" />
+                <NavBarMenuLink linkName="Company Register" to="/societe/register" />
+                {companyName && <NavBarMenuLink linkName="Dashboard" to="/societe/dashboard" />}
                 <NavBarMenuLink linkName="Services" to="/#services" />
             </div>
             <div className={styles.buttonsContainer}>

@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './vehicleListingStyles.css';
+import { getSocietes, createSociete } from '../api/societeAPI';
 
 
 const baseFormState = {
@@ -46,6 +47,10 @@ export default function VehicleListingForm({ mode }) {
     caution: '',
   });
   const [message, setMessage] = useState({ error: '', success: '' });
+  const [societes, setSocietes] = useState([]);
+  const [selectedSociete, setSelectedSociete] = useState('');
+  const [showCreateSociete, setShowCreateSociete] = useState(false);
+  const [newSociete, setNewSociete] = useState({ name: '', type: isRental ? 'rent' : 'sale' });
 
   const title = isRental ? 'Rent a car' : 'Sell a car';
   const subtitle = isRental
@@ -58,6 +63,31 @@ export default function VehicleListingForm({ mode }) {
       ...current,
       [name]: type === 'checkbox' ? checked : value,
     }));
+  };
+
+  useEffect(() => {
+    async function loadSocietes() {
+      try {
+        const data = await getSocietes();
+        setSocietes(Array.isArray(data) ? data : []);
+      } catch (err) {
+        console.warn('Failed to load societes', err);
+      }
+    }
+    loadSocietes();
+  }, [isRental]);
+
+  const handleCreateSociete = async (e) => {
+    e.preventDefault();
+    try {
+      const created = await createSociete({ ...newSociete });
+      setSocietes((s) => [...s, created]);
+      setSelectedSociete(created.id ?? '');
+      setShowCreateSociete(false);
+      setNewSociete({ name: '', type: isRental ? 'rent' : 'sale' });
+    } catch (err) {
+      console.error('create societe failed', err);
+    }
   };
 
   const handleSubmit = async (event) => {
@@ -87,6 +117,7 @@ export default function VehicleListingForm({ mode }) {
             prix_vente: Number(form.prix_vente),
             negociable: form.negociable,
           }),
+      ...(selectedSociete ? { societe_id: selectedSociete } : {}),
     };
     try {
       // TODO: replace with real API call
@@ -142,6 +173,41 @@ export default function VehicleListingForm({ mode }) {
                     <span>Negotiable price</span>
                   </label>
                 </>
+              )}
+
+              <label className="vehicle-field">
+                <span>Company</span>
+                <div style={{display: 'flex', gap: 8, alignItems: 'center'}}>
+                  <select value={selectedSociete} onChange={(e) => setSelectedSociete(e.target.value)}>
+                    <option value="">-- Select company (optional) --</option>
+                    {societes.filter(s => s.type === (isRental ? 'rent' : 'sale')).map((s) => (
+                      <option key={s.id} value={s.id}>{s.name}</option>
+                    ))}
+                  </select>
+                  <button type="button" className="link-button" onClick={() => setShowCreateSociete((v) => !v)}>
+                    {showCreateSociete ? 'Cancel' : 'Add company'}
+                  </button>
+                </div>
+              </label>
+
+              {showCreateSociete && (
+                <form onSubmit={handleCreateSociete} className="vehicle-create-societe">
+                  <label className="vehicle-field">
+                    <span>Company name</span>
+                    <input name="name" value={newSociete.name} onChange={(e) => setNewSociete((n) => ({...n, name: e.target.value}))} />
+                  </label>
+                  <label className="vehicle-field">
+                    <span>Type</span>
+                    <select name="type" value={newSociete.type} onChange={(e) => setNewSociete((n) => ({...n, type: e.target.value}))}>
+                      <option value="sale">Sale</option>
+                      <option value="rent">Rent</option>
+                    </select>
+                  </label>
+                  <div style={{display: 'flex', gap: 8}}>
+                    <button className="listing-submit-button" type="submit">Create</button>
+                    <button type="button" className="link-button" onClick={() => setShowCreateSociete(false)}>Cancel</button>
+                  </div>
+                </form>
               )}
 
               <label className="vehicle-field full-width">

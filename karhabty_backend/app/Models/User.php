@@ -21,6 +21,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'is_suspended',
     ];
 
     protected $hidden = [
@@ -34,6 +35,7 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'role' => 'integer',
+            'is_suspended' => 'boolean',
         ];
     }
 

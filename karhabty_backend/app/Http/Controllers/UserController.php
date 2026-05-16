@@ -44,7 +44,7 @@ class UserController extends Controller
 
             $user = User::where('email', $request->email)->first();
 
-            if (!$user || !Hash::check($request->password, $user->password)) {
+            if (!$user || $user->is_suspended || !Hash::check($request->password, $user->password)) {
                 return response()->json(['error' => 'Unauthorized'], 401);
             }
 

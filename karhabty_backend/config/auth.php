@@ -25,6 +25,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'societes' => [
+            'driver' => 'session',
+            'provider' => 'societes',
+        ],
         'api' => [
             'driver' => 'sanctum',
             'provider' => 'users',
@@ -68,7 +72,11 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', User::class),
+            'model' => User::class,
+        ],
+        'societes' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Societe::class,
         ],
 
         // 'users' => [

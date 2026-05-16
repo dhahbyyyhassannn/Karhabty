@@ -20,6 +20,15 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+            'role' => 0,
+            'is_suspended' => false,
+        ]);
+
+        User::factory()->create([
+            'name' => 'Admin User',
+            'email' => 'admin@example.com',
+            'role' => 2,
+            'is_suspended' => false,
         ]);
     }
 }

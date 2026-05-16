@@ -20,6 +20,17 @@ export default function LandingPage() {
                     <Link to="/sell" className="btn-hero btn-buy">
                         Buy Your Next Car
                     </Link>
+                    <div className="hero-societe">
+                        <p>You're a société? Register or sign in to manage your listings.</p>
+                        <div className="company-actions">
+                          <Link to="/societe/register" className="btn-hero btn-company">
+                              Register as Company
+                          </Link>
+                          <Link to="/societe/signin" className="btn-hero btn-company-secondary">
+                              Company Sign In
+                          </Link>
+                        </div>
+                    </div>
                 </div>
             </section>
 

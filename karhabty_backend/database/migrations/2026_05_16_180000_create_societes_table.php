@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->string('user_id')->primary();
+        Schema::create('societes', function (Blueprint $table) {
+            $table->id();
             $table->string('name');
+            $table->string('type')->comment('sale or rent');
             $table->string('email')->unique();
             $table->string('password');
-            $table->integer('role')->default(0); //('0: user', '1: company', '2: admin')
+            $table->string('phone')->nullable();
+            $table->text('address')->nullable();
             $table->boolean('is_suspended')->default(false);
             $table->timestamps();
         });
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('societes');
     }
 };

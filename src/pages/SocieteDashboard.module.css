@@ -1,0 +1,240 @@
+.container {
+  padding: 32px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+  padding: 28px;
+  background: rgba(255, 250, 242, 0.92);
+  border-radius: 24px;
+  box-shadow: 0 18px 40px rgba(42, 34, 28, 0.08);
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(28px, 3vw, 40px);
+  color: #2a221c;
+}
+
+.hero p {
+  margin: 8px 0 0;
+  color: #4b3a2c;
+  max-width: 760px;
+}
+
+.tabs {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.tabs button {
+  padding: 12px 22px;
+  border: none;
+  border-radius: 999px;
+  background: rgba(180, 106, 42, 0.12);
+  color: #2a221c;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.activeTab {
+  background: #ddb23a;
+  color: #fffaf2;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.9fr);
+  gap: 24px;
+}
+
+.tableCard,
+.formCard {
+  background: rgba(255, 250, 242, 0.94);
+  padding: 24px;
+  border-radius: 24px;
+  box-shadow: 0 18px 40px rgba(42, 34, 28, 0.08);
+}
+
+.tableCard h2,
+.formCard h2 {
+  margin-top: 0;
+  margin-bottom: 18px;
+  color: #2a221c;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow-x: auto;
+}
+
+.table th,
+.table td {
+  padding: 14px 12px;
+  border-bottom: 1px solid rgba(42, 34, 28, 0.08);
+  text-align: left;
+  color: #40342f;
+}
+
+.table th {
+  font-weight: 700;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.actionButton,
+.actionButtonDanger,
+.btnPrimary,
+.btnOutline {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.actionButton {
+  background: #ddb23a;
+  color: #fffaf2;
+  margin-right: 8px;
+}
+
+.actionButtonDanger {
+  background: #b03a2e;
+  color: #fffaf2;
+}
+
+.btnPrimary {
+  background: #8f471a;
+  color: #fffaf2;
+}
+
+.btnOutline {
+  background: transparent;
+  border: 1px solid #8f471a;
+  color: #8f471a;
+}
+
+.form {
+  display: grid;
+  gap: 14px;
+}
+
+.formField,
+.formFieldCheckbox {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.formField input,
+.formField textarea,
+.formField select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid rgba(42, 34, 28, 0.18);
+  border-radius: 12px;
+  background: #fffaf2;
+  color: #2a221c;
+}
+
+.formField textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.formFieldCheckbox {
+  flex-direction: row;
+  align-items: center;
+}
+
+.formFieldCheckbox input {
+  width: auto;
+  margin-right: 10px;
+}
+
+.formActions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.messageError,
+.messageSuccess {
+  padding: 12px 14px;
+  border-radius: 14px;
+  font-weight: 700;
+}
+
+.messageError {
+  background: rgba(176, 58, 46, 0.12);
+  color: #8f271a;
+}
+
+.messageSuccess {
+  background: rgba(73, 131, 74, 0.12);
+  color: #315c31;
+}
+
+.emptyState {
+  margin: 80px auto;
+  max-width: 620px;
+  text-align: center;
+  padding: 32px;
+  background: rgba(255, 250, 242, 0.94);
+  border-radius: 24px;
+  box-shadow: 0 18px 40px rgba(42, 34, 28, 0.08);
+}
+
+.emptyState h2 {
+  margin-bottom: 18px;
+  color: #2a221c;
+}
+
+.emptyState p {
+  margin-bottom: 24px;
+  color: #4b3a2c;
+}
+
+.actionGroup {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 980px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .hero {
+    flex-direction: column;
+    align-items: normal;
+  }
+
+  .tabs {
+    flex-direction: column;
+  }
+
+  .actionButton,
+  .actionButtonDanger,
+  .btnPrimary,
+  .btnOutline {
+    width: 100%;
+  }
+}
