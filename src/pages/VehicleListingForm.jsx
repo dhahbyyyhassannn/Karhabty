@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { submitRentalVehicle, submitSaleVehicle } from '../component/auth';
 import './vehicleListingStyles.css';
 
 
@@ -89,29 +88,14 @@ export default function VehicleListingForm({ mode }) {
             negociable: form.negociable,
           }),
     };
-
     try {
-      if (isRental) {
-        await submitRentalVehicle(payload);
-      } else {
-        await submitSaleVehicle(payload);
-      }
-
-      setMessage({
-        error: '',
-        success: isRental
-          ? 'Rental listing submitted successfully.'
-          : 'Sales listing submitted successfully.',
-      });
-      setForm({
-        ...baseFormState,
-        prix_vente: '',
-        negociable: false,
-        prix_par_jour: '',
-        caution: '',
-      });
-    } catch (error) {
-      setMessage({ error: error.message, success: '' });
+      // TODO: replace with real API call
+      console.log('Submitting vehicle payload', payload);
+      setMessage({ error: '', success: 'Listing submitted successfully.' });
+      // optionally reset form:
+      // setForm({ ...baseFormState, prix_vente: '', negociable: false, prix_par_jour: '', caution: '' });
+    } catch (err) {
+      setMessage({ error: 'Submission failed. Please try again.', success: '' });
     }
   };
 
@@ -182,4 +166,4 @@ export default function VehicleListingForm({ mode }) {
       </div>
     </section>
   );
-}
+  }

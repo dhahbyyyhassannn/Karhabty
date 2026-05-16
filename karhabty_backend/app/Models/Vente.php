@@ -6,10 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Vente extends Model
 {
-    public function utilisateur() {
+    protected $table = 'vente';
+    protected $fillable = [
+        'id',
+        'matricule',
+        'date_vente',
+        'prix_vente',
+    ];
+    public function user() {
         return $this->belongsTo(User::class, 'id');
     }
     public function vehicule_vente() {
-        return $this->belongsTo(Vehicule_vente::class, 'matricule');
+        return $this->belongsTo(VehiculeVente::class, 'matricule', 'matricule');
     }
 }

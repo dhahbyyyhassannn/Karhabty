@@ -4,12 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class VehiculeVente extends Vehicule
+class VehiculeVente extends Model
 {
-    public function vehicule() {
-        return $this->belongsTo(Vehicule::class);
-    }
+    protected $table = 'vehicule_vente';
+    protected $primaryKey = 'matricule';
+
+    protected $fillable = ['disponible'];
     public function vente() {
-        return $this->hasMany(Vente::class);
+        return $this->hasOne(Vente::class, 'matricule', 'matricule');
     }
 }

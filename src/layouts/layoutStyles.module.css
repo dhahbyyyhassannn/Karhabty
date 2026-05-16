@@ -53,6 +53,13 @@
     align-items: center;
 }
 
+.welcomeText {
+    color: #fffaf2;
+    font-weight: 600;
+    margin-right: 10px;
+    white-space: nowrap;
+}
+
 @media (max-width: 900px) {
     .navbar {
         flex-wrap: wrap;

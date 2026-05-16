@@ -6,10 +6,20 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reservation extends Model
 {
-    public function utilisateur() {
-        return $this->belongsTo(User::class, 'id');
+
+    protected $table = 'reservation';
+    protected $fillable = [
+        'id',
+        'matricule',
+        'date_debut',
+        'date_fin',
+        'prix_total'
+    ];
+
+    public function user() {
+        return $this->belongsTo(User::class, 'id', 'id');
     }
     public function vehicule_location() {
-        return $this->belongsTo(Vehicule_location::class, 'matricule');
+        return $this->belongsTo(Vehicule_location::class, 'matricule', 'matricule');
     }
 }

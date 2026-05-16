@@ -29,8 +29,8 @@ return new class extends Migration
             $table->float('caution', 6);
             $table->string('disponibilite')->default('disponible');
             $table->timestamps();
-            $table->string('id');
-            $table->foreign('id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('user_id');
+            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
         });
     }
 

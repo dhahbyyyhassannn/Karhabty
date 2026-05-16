@@ -16,21 +16,20 @@ export default function LogIn() {
     try {
       const response = await login({ email, password });
       if (response.token) {
-        localStorage.setItem('token', response.token);
-        Swal.fire({
+        localStorage.setItem('token', response.token);        localStorage.setItem('userName', response.user?.name || 'User');        Swal.fire({
           icon: 'success',
           title: 'Connexion réussie',
           text: 'Vous êtes maintenant connecté.',
         });
         navigate('/');
       } else {
-        setError('Échec de la connexion');
+        setError(response.message || 'Échec de la connexion.');
       }
     } catch (error) {
       Swal.fire({
         icon: 'error',
         title: 'Erreur',
-        text: error.message || 'Échec de la connexion.',
+        text: error.response?.data?.message || 'Échec de la connexion.',
       });
     }
   };

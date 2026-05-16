@@ -12,10 +12,11 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('reservation', function (Blueprint $table) {
-            $table->string('id');
+            $table->id();
+            $table->string('user_id');
             $table->string('matricule');
-            $table->primary(['id', 'matricule']);
-            $table->foreign('id')->references('id')->on('users')->onDelete('cascade');
+            $table->primary(['user_id', 'matricule']);
+            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
             $table->foreign('matricule')->references('matricule')->on('vehicule_location')->onDelete('cascade');
             $table->date('date_debut');
             $table->date('date_fin');
