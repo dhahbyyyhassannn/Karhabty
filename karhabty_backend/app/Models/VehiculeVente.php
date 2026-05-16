@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Vehicule_vente extends Vehicule
+class VehiculeVente extends Vehicule
 {
     public function vehicule() {
         return $this->belongsTo(Vehicule::class);

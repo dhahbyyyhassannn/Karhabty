@@ -39,15 +39,17 @@ class UserController extends Controller
 
     public function logIn(Request $request)
     {
-        $credentials = $request->only('email', 'password');
-
-        if (!$token = Auth::attempt($credentials)) {
-            return response()->json(['error' => 'invalid_credentials'], 401);
+        if (!Auth::attempt($request->only('email', 'password'))) {
+            return response()->json([
+                'error' => 'Unauthorized',
+            ], 401);
         }
-
+        $user = Auth::user();
+        $token = $user->createToken('auth_token')->plainTextToken;
         return response()->json([
+            'message' => 'user logged in successfully',
             'token' => $token,
-            'user' => Auth::user(),
+            'user' => $user,
         ]);
     }
 }

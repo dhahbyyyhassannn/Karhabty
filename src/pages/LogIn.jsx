@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { login } from '../component/auth';
+import login from '../api/authAPI';
 import './AuthPages.css';
+import Swal from 'sweetalert2';
 
-export default function SignIn() {
+export default function LogIn() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -13,15 +14,24 @@ export default function SignIn() {
     e.preventDefault();
     setError(null);
     try {
-      const res = await login({ email, password });
-      if (res.token) {
-        localStorage.setItem('token', res.token);
+      const response = await login({ email, password });
+      if (response.token) {
+        localStorage.setItem('token', response.token);
+        Swal.fire({
+          icon: 'success',
+          title: 'Connexion réussie',
+          text: 'Vous êtes maintenant connecté.',
+        });
         navigate('/');
       } else {
         setError('Échec de la connexion');
       }
-    } catch (err) {
-      setError(err.message || 'Erreur');
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Erreur',
+        text: error.message || 'Échec de la connexion.',
+      });
     }
   };
 

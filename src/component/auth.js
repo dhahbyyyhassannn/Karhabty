@@ -1,13 +1,13 @@
-import axios from 'axios/dist/browser/axios.cjs';
+import axios from 'axios';
 
-const API_BASE = process.env.REACT_APP_API_BASE || 'http://127.0.0.1:8000/api';
+const API_BASE = 'http://127.0.0.1:8000/';
 
 export async function login({ email, password }) {
   try {
     const { data } = await axios.post(`${API_BASE}/logIn`, { email, password }, {
       headers: {
+        Authorization: localStorage.getItem('token'),
         'Content-Type': 'application/json',
-        Accept: 'application/json',
       },
     });
     return data;
@@ -16,12 +16,12 @@ export async function login({ email, password }) {
   }
 }
 
-export async function signup({ name, email, password, role }) {
+export async function register({ name, email, password, role }) {
   try {
-    const { data } = await axios.post(`${API_BASE}/signIn`, { name, email, password, role }, {
+    const { data } = await axios.post(`${API_BASE}/signIn`, { name, email, password }, {
       headers: {
+        Authorization: localStorage.getItem('token'),
         'Content-Type': 'application/json',
-        Accept: 'application/json',
       },
     });
     return data;
@@ -39,7 +39,7 @@ export function logout() {
   localStorage.removeItem('token');
 }
 
-async function submitVehicleListing(endpoint, payload) {
+export async function submitVehicleListing(endpoint, payload) {
   const token = getToken();
 
   if (!token) {
@@ -70,6 +70,3 @@ export function submitRentalVehicle(payload) {
   return submitVehicleListing('/vehicules/location', payload);
 }
 
-const auth = { login, signup, getToken, logout };
-
-export default auth;
