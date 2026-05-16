@@ -12,3 +12,18 @@ export async function addVehicleForSale(vehicleData) {
     });
     return response.data;
 }
+
+export async function getRentalVehicles() {
+    const response = await axios.get(`${url}api/vehicles/rentals`);
+    return response.data;
+}
+
+export async function getSaleVehicles() {
+    const response = await axios.get(`${url}api/vehicles/sales`);
+    return response.data;
+}
+
+export async function getVehicleById(id) {
+    const response = await axios.get(`${url}api/vehicles/${id}`);
+    return response.data;
+}

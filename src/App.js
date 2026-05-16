@@ -5,6 +5,8 @@ import SignUp from './pages/Register';
 import RentCarPage from './pages/RentCarPage';
 import SellCarPage from './pages/SellCarPage';
 import AddVehicle from './pages/AddVehicle';
+import VehicleListingPage from './pages/VehicleListingPage';
+import VehicleDetailPage from './pages/VehicleDetailPage';
 
 function App() {
   return (
@@ -17,6 +19,9 @@ function App() {
       <Route path="/rental" element={<RentCarPage />} />
       <Route path="/sale" element={<SellCarPage />} />
       <Route path="/add-vehicle" element={<AddVehicle />} />
+      <Route path="/vehicles/rent" element={<VehicleListingPage type="rent" />} />
+      <Route path="/vehicles/sell" element={<VehicleListingPage type="sell" />} />
+      <Route path="/vehicle/:id" element={<VehicleDetailPage />} />
     </Routes>
   );
 }

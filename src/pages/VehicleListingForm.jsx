@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { submitRentalVehicle, submitSaleVehicle } from '../component/auth';
 import './vehicleListingStyles.css';
 
+
 const baseFormState = {
   matricule: '',
   marque: '',

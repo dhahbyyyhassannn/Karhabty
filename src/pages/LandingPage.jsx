@@ -106,10 +106,10 @@ export default function LandingPage() {
             <section className="cta-section" id="cta">
                 <h2>Ready to drive your next story?</h2>
                 <p>Join a platform built for easy renting, confident buying, and premium service.</p>
-                <Link to="/rental" className="btn-cta">
+                <Link to="/vehicles/rent" className="btn-cta">
                     Get rentals
                 </Link>
-                <Link to="/sale" className="btn-cta">
+                <Link to="/vehicles/sell" className="btn-cta">
                     Get sales
                 </Link>
             </section>
