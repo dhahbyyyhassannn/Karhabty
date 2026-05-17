@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import './VehicleCard.module.css';
+import styles from './VehicleCard.module.css';
 
 export default function VehicleCard({ vehicle, type }) {
   const isRental = type === 'rent';
@@ -7,59 +7,70 @@ export default function VehicleCard({ vehicle, type }) {
   const priceLabel = isRental ? 'DT/jour' : 'DT';
 
   return (
-    <Link to={`/vehicle/${vehicle.id}`} className="vehicle-card-link">
-      <div className="vehicle-card">
-        <div className="vehicle-card-image">
+    <Link to={`/vehicle/${vehicle.id}`} className={styles.link}>
+      <div className={styles.card}>
+
+        {/* Image */}
+        <div className={styles.imageWrapper}>
           <img
-            src={vehicle.image || 'https://via.placeholder.com/400x300?text=No+Image'}
+            src={vehicle.image || '/placeholder-car.jpg'}
             alt={`${vehicle.marque} ${vehicle.modele}`}
+            className={styles.image}
             onError={(e) => {
-              e.target.src = 'https://via.placeholder.com/400x300?text=Image+Indisponible';
+              e.target.style.display = 'none';
             }}
           />
-          <span className={`vehicle-card-badge ${isRental ? 'rent' : 'sell'}`}>
-            {isRental ? 'LOCATION' : 'VENTE'}
+          <span className={`${styles.badge} ${isRental ? styles.badgeRent : styles.badgeSell}`}>
+            {isRental ? 'Location' : 'Vente'}
           </span>
         </div>
 
-        <div className="vehicle-card-content">
-          <div className="vehicle-card-header">
-            <h3 className="vehicle-card-title">
+        {/* Corps */}
+        <div className={styles.body}>
+          <div className={styles.header}>
+            <h3 className={styles.title}>
               {vehicle.marque} {vehicle.modele}
             </h3>
-            <span className="vehicle-card-year">{vehicle.annee}</span>
+            <span className={styles.year}>{vehicle.annee}</span>
           </div>
 
-          <p className="vehicle-card-description">{vehicle.description}</p>
+          <p className={styles.description}>{vehicle.description}</p>
 
-          {/* Spécifications rapides */}
-          <div className="vehicle-card-specs">
-            <div className="spec">
-              <span className="spec-icon">🛢️</span>
+          <div className={styles.specs}>
+            <div className={styles.spec}>
+              <span className={styles.specIcon}>⛽</span>
               <span>{vehicle.carburant}</span>
             </div>
-            <div className="spec">
-              <span className="spec-icon">👥</span>
-              <span>{vehicle.nb_places} Places</span>
+            <div className={styles.spec}>
+              <span className={styles.specIcon}>👥</span>
+              <span>{vehicle.nb_places} places</span>
             </div>
-            <div className="spec">
-              <span className="spec-icon">🚪</span>
-              <span>{vehicle.nb_portes} Portes</span>
+            <div className={styles.spec}>
+              <span className={styles.specIcon}>🚪</span>
+              <span>{vehicle.nb_portes} portes</span>
             </div>
-            <div className="spec">
-              <span className="spec-icon">📊</span>
+            <div className={styles.spec}>
+              <span className={styles.specIcon}>📍</span>
               <span>{vehicle.kilometrage?.toLocaleString()} km</span>
             </div>
           </div>
 
-          <div className="vehicle-card-footer">
-            <div className="vehicle-card-price">
-              <span className="price-value">{price?.toLocaleString()}</span>
-              <span className="price-unit">{priceLabel}</span>
+          <div className={styles.footer}>
+            <div className={styles.priceBlock}>
+              <span className={styles.priceLabel}>
+                {isRental ? 'Prix / jour' : 'Prix'}
+              </span>
+              <span className={styles.priceValue}>
+                {price?.toLocaleString()}
+              </span>
+              <span className={styles.priceUnit}>{priceLabel}</span>
             </div>
-            <button className="vehicle-card-btn">Voir détails →</button>
+            <button className={styles.btn}>
+              Voir détails →
+            </button>
           </div>
         </div>
+
       </div>
     </Link>
   );

@@ -1,11 +1,10 @@
+import { Link } from 'react-router-dom';
 import styles from './linkStyles.module.css';
-import { useNavigate } from 'react-router-dom';
 
-export default function NavBarMenuLink({linkName, linkPath}) {
-    const navigate = useNavigate();
+export default function NavBarMenuLink({ linkName, to }) {
     return (
-        <a onClick={() => navigate(linkPath)} className={styles.navbarLink}>
+        <Link to={to} className={styles.navbarLink}>
             {linkName}
-        </a>
-    )
+        </Link>
+    );
 }

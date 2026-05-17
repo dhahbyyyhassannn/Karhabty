@@ -48,11 +48,8 @@ export default function NavBar() {
             </div>
             <div className={styles.linksContainer}>
                 <NavBarMenuLink linkName="Home" to="/" />
-                <NavBarMenuLink linkName="Rent a Car" to="/rent" />
-                <NavBarMenuLink linkName="Sell a Car" to="/sell" />
-                <NavBarMenuLink linkName="Company" to="/societe/signin" />
-                <NavBarMenuLink linkName="Company Register" to="/societe/register" />
-                {companyName && <NavBarMenuLink linkName="Dashboard" to="/societe/dashboard" />}
+                <NavBarMenuLink linkName="Rent a Car" to="vehicles/rent" />
+                <NavBarMenuLink linkName="Sell a Car" to="vehicles/sell" />
                 <NavBarMenuLink linkName="Services" to="/#services" />
             </div>
             <div className={styles.buttonsContainer}>

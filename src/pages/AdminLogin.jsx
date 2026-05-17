@@ -18,7 +18,6 @@ export default function AdminLogin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-
     try {
       const response = await axios.post(`${url}api/admin/login`, form, {
         headers: { 'Content-Type': 'application/json' },

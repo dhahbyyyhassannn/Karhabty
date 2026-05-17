@@ -31,22 +31,36 @@ export default function SocieteLogin() {
   };
 
   return (
-    <section className="auth-page">
-      <div className="auth-card">
-        <h2>Company Sign In</h2>
-        <form onSubmit={handleSubmit} className="auth-form">
-          <label>
-            Email
-            <input type="email" name="email" value={form.email} onChange={handleChange} required />
-          </label>
-          <label>
-            Password
-            <input type="password" name="password" value={form.password} onChange={handleChange} required />
-          </label>
+    <div className="signin-container">
+      <div className="signin-box">
+        <h2>Connexion entreprise</h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>Email</label>
+            <input
+              type="email"
+              name="email"
+              value={form.email}
+              onChange={handleChange}
+              placeholder="Votre email"
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Mot de passe</label>
+            <input
+              type="password"
+              name="password"
+              value={form.password}
+              onChange={handleChange}
+              placeholder="Votre mot de passe"
+              required
+            />
+          </div>
           {error && <div className="error-message">{error}</div>}
-          <button className="btn btn-primary" type="submit">Sign in as company</button>
+          <button type="submit">Se connecter</button>
         </form>
       </div>
-    </section>
+    </div>
   );
 }

@@ -33,13 +33,6 @@ export default function LandingPage() {
                             Register Your Company
                         </Link>
                     </div>
-
-                    <div className="button-group">
-                        <h3 className="button-group-title">👨‍💼 Admin Access</h3>
-                        <Link to="/admin/login" className="btn-hero btn-admin">
-                            Admin Dashboard
-                        </Link>
-                    </div>
                 </div>
             </section>
 
