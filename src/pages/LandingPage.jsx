@@ -14,22 +14,31 @@ export default function LandingPage() {
                 <div className="hero-overlay" />
                 <MainInformations />
                 <div className="hero-buttons">
-                    <Link to="/rent" className="btn-hero btn-rent">
-                        Start Renting
-                    </Link>
-                    <Link to="/sell" className="btn-hero btn-buy">
-                        Buy Your Next Car
-                    </Link>
-                    <div className="hero-societe">
-                        <p>You're a société? Register or sign in to manage your listings.</p>
-                        <div className="company-actions">
-                          <Link to="/societe/register" className="btn-hero btn-company">
-                              Register as Company
-                          </Link>
-                          <Link to="/societe/signin" className="btn-hero btn-company-secondary">
-                              Company Sign In
-                          </Link>
-                        </div>
+                    <div className="button-group">
+                        <h3 className="button-group-title">👤 Customer Access</h3>
+                        <Link to="/signin" className="btn-hero btn-primary">
+                            Customer Sign In
+                        </Link>
+                        <Link to="/signup" className="btn-hero btn-secondary">
+                            Customer Sign Up
+                        </Link>
+                    </div>
+
+                    <div className="button-group">
+                        <h3 className="button-group-title">🏢 Company Access</h3>
+                        <Link to="/societe/signin" className="btn-hero btn-company">
+                            Company Sign In
+                        </Link>
+                        <Link to="/societe/register" className="btn-hero btn-company-secondary">
+                            Register Your Company
+                        </Link>
+                    </div>
+
+                    <div className="button-group">
+                        <h3 className="button-group-title">👨‍💼 Admin Access</h3>
+                        <Link to="/admin/login" className="btn-hero btn-admin">
+                            Admin Dashboard
+                        </Link>
                     </div>
                 </div>
             </section>
@@ -117,12 +126,26 @@ export default function LandingPage() {
             <section className="cta-section" id="cta">
                 <h2>Ready to drive your next story?</h2>
                 <p>Join a platform built for easy renting, confident buying, and premium service.</p>
-                <Link to="/vehicles/rent" className="btn-cta">
-                    Get rentals
-                </Link>
-                <Link to="/vehicles/sell" className="btn-cta">
-                    Get sales
-                </Link>
+                <div className="cta-button-group">
+                    <div className="cta-group">
+                        <h4>📍 Browse Vehicles</h4>
+                        <Link to="/vehicles/rent" className="btn-cta">
+                            Find Rental Cars
+                        </Link>
+                        <Link to="/vehicles/sell" className="btn-cta">
+                            Browse Sales
+                        </Link>
+                    </div>
+                    <div className="cta-group">
+                        <h4>🎯 Manage Your Account</h4>
+                        <Link to="/profile" className="btn-cta">
+                            My Profile
+                        </Link>
+                        <Link to="/societe/dashboard" className="btn-cta">
+                            Company Dashboard
+                        </Link>
+                    </div>
+                </div>
             </section>
         </>
     )

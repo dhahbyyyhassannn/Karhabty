@@ -38,6 +38,8 @@ export default function SocieteDashboard() {
   const [editing, setEditing] = useState(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ success: '', error: '' });
+  const [showForm, setShowForm] = useState(false);
+  const [expandedVehicle, setExpandedVehicle] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -84,6 +86,7 @@ export default function SocieteDashboard() {
   const resetForm = () => {
     setForm(defaultForm);
     setEditing(null);
+    setShowForm(false);
     setMessage({ success: '', error: '' });
   };
 
@@ -110,6 +113,7 @@ export default function SocieteDashboard() {
       caution: item.caution || '',
     });
     setEditing({ matricule: item.matricule, type: itemType });
+    setShowForm(true);
   };
 
   const handleDelete = async (matricule) => {
@@ -185,6 +189,8 @@ export default function SocieteDashboard() {
       );
     }
 
+    const vehicleList = tab === 'sales' ? vehicles.sales : vehicles.rentals;
+
     return (
       <>
         <section className={styles.hero}>
@@ -193,8 +199,8 @@ export default function SocieteDashboard() {
             <p>Manage your vehicles for sale and rental from one place.</p>
           </div>
           <div>
-            <button className={styles.btnPrimary} onClick={() => { resetForm(); setTab('sales'); }}>
-              Add new vehicle
+            <button className={styles.btnPrimary} onClick={() => { setForm(defaultForm); setEditing(null); setShowForm(!showForm); }}>
+              {showForm ? 'Hide Form' : 'Add new vehicle'}
             </button>
             <button className={styles.btnOutline} onClick={handleLogout} style={{ marginLeft: 12 }}>
               Logout
@@ -211,179 +217,210 @@ export default function SocieteDashboard() {
           </button>
         </section>
 
-        <section className={styles.grid}>
-          <div className={styles.tableCard}>
-            <h2>{tab === 'sales' ? 'Sale vehicles' : 'Rental vehicles'}</h2>
-            {loading ? (
-              <p>Loading...</p>
-            ) : (tab === 'sales' ? (
-              <table className={styles.table}>
-                <thead>
-                  <tr>
-                    <th>Matricule</th>
-                    <th>Marque</th>
-                    <th>Modele</th>
-                    <th>Prix</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {vehicles.sales.map((vehicle) => (
-                    <tr key={vehicle.matricule}>
-                      <td>{vehicle.matricule}</td>
-                      <td>{vehicle.marque}</td>
-                      <td>{vehicle.modele}</td>
-                      <td>{vehicle.prix_vente}</td>
-                      <td>
-                        <button className={styles.actionButton} onClick={() => handleEdit(vehicle, 'sale')}>
-                          Edit
-                        </button>
-                        <button className={styles.actionButtonDanger} onClick={() => handleDelete(vehicle.matricule)}>
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            ) : (
-              <table className={styles.table}>
-                <thead>
-                  <tr>
-                    <th>Matricule</th>
-                    <th>Marque</th>
-                    <th>Modele</th>
-                    <th>Daily price</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {vehicles.rentals.map((vehicle) => (
-                    <tr key={vehicle.matricule}>
-                      <td>{vehicle.matricule}</td>
-                      <td>{vehicle.marque}</td>
-                      <td>{vehicle.modele}</td>
-                      <td>{vehicle.prix_par_jour}</td>
-                      <td>
-                        <button className={styles.actionButton} onClick={() => handleEdit(vehicle, 'rent')}>
-                          Edit
-                        </button>
-                        <button className={styles.actionButtonDanger} onClick={() => handleDelete(vehicle.matricule)}>
-                          Delete
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            ))}
-          </div>
-
-          <div className={styles.formCard}>
-            <h2>{editing ? 'Edit vehicle' : 'Add vehicle'}</h2>
-            <form className={styles.form} onSubmit={handleSubmit}>
-              {!editing && (
-                <label className={styles.formField}>
-                  Vehicle purpose
-                  <select name="vehicle_type" value={form.vehicle_type} onChange={handleChange}>
-                    <option value="sale">Sale</option>
-                    <option value="rent">Rent</option>
-                  </select>
-                </label>
-              )}
-              <label className={styles.formField}>
-                Matricule
-                <input name="matricule" value={form.matricule} onChange={handleChange} required />
-              </label>
-              <label className={styles.formField}>
-                Marque
-                <input name="marque" value={form.marque} onChange={handleChange} required />
-              </label>
-              <label className={styles.formField}>
-                Modele
-                <input name="modele" value={form.modele} onChange={handleChange} required />
-              </label>
-              <label className={styles.formField}>
-                Couleur
-                <input name="couleur" value={form.couleur} onChange={handleChange} required />
-              </label>
-              <label className={styles.formField}>
-                Type
-                <input name="type" value={form.type} onChange={handleChange} required />
-              </label>
-              <label className={styles.formField}>
-                Annee
-                <input name="annee" type="number" value={form.annee} onChange={handleChange} required />
-              </label>
-              <label className={styles.formField}>
-                Carburant
-                <input name="carburant" value={form.carburant} onChange={handleChange} required />
-              </label>
-              <label className={styles.formField}>
-                Places
-                <input name="nb_places" type="number" value={form.nb_places} onChange={handleChange} required />
-              </label>
-              <label className={styles.formField}>
-                Portes
-                <input name="nb_portes" type="number" value={form.nb_portes} onChange={handleChange} required />
-              </label>
-              <label className={styles.formField}>
-                Cylindres
-                <input name="nb_cylindres" type="number" value={form.nb_cylindres} onChange={handleChange} required />
-              </label>
-              <label className={styles.formField}>
-                Kilometrage
-                <input name="kilometrage" type="number" value={form.kilometrage} onChange={handleChange} required />
-              </label>
-              {form.vehicle_type === 'sale' ? (
-                <>
+        {showForm && (
+          <section className={styles.formSection}>
+            <div className={styles.formCard}>
+              <h2>{editing ? 'Edit vehicle' : 'Add vehicle'}</h2>
+              <form className={styles.form} onSubmit={handleSubmit}>
+                {!editing && (
                   <label className={styles.formField}>
-                    Prix de vente
-                    <input name="prix_vente" type="number" step="0.01" value={form.prix_vente} onChange={handleChange} required />
+                    Vehicle purpose
+                    <select name="vehicle_type" value={form.vehicle_type} onChange={handleChange}>
+                      <option value="sale">Sale</option>
+                      <option value="rent">Rent</option>
+                    </select>
                   </label>
-                  <label className={styles.formFieldCheckbox}>
-                    <input name="negociable" type="checkbox" checked={form.negociable} onChange={handleChange} />
-                    Négociable
-                  </label>
-                </>
-              ) : (
-                <>
-                  <label className={styles.formField}>
-                    Prix par jour
-                    <input name="prix_par_jour" type="number" step="0.01" value={form.prix_par_jour} onChange={handleChange} required />
-                  </label>
-                  <label className={styles.formField}>
-                    Caution
-                    <input name="caution" type="number" step="0.01" value={form.caution} onChange={handleChange} required />
-                  </label>
-                </>
-              )}
-              <label className={styles.formField}>
-                Description
-                <textarea name="description" value={form.description} onChange={handleChange} required />
-              </label>
-              <label className={styles.formField}>
-                Image URL
-                <input name="image" value={form.image} onChange={handleChange} required />
-              </label>
-              {message.error && <div className={styles.messageError}>{message.error}</div>}
-              {message.success && <div className={styles.messageSuccess}>{message.success}</div>}
-              <div className={styles.formActions}>
-                <button className={styles.btnPrimary} type="submit">
-                  {editing ? 'Update vehicle' : 'Add vehicle'}
-                </button>
-                {editing && (
-                  <button type="button" className={styles.btnOutline} onClick={resetForm}>
-                    Cancel
-                  </button>
                 )}
-              </div>
-            </form>
-          </div>
+                <label className={styles.formField}>
+                  Matricule
+                  <input name="matricule" value={form.matricule} onChange={handleChange} required />
+                </label>
+                <label className={styles.formField}>
+                  Marque
+                  <input name="marque" value={form.marque} onChange={handleChange} required />
+                </label>
+                <label className={styles.formField}>
+                  Modele
+                  <input name="modele" value={form.modele} onChange={handleChange} required />
+                </label>
+                <label className={styles.formField}>
+                  Couleur
+                  <input name="couleur" value={form.couleur} onChange={handleChange} required />
+                </label>
+                <label className={styles.formField}>
+                  Type
+                  <input name="type" value={form.type} onChange={handleChange} required />
+                </label>
+                <label className={styles.formField}>
+                  Annee
+                  <input name="annee" type="number" value={form.annee} onChange={handleChange} required />
+                </label>
+                <label className={styles.formField}>
+                  Carburant
+                  <input name="carburant" value={form.carburant} onChange={handleChange} required />
+                </label>
+                <label className={styles.formField}>
+                  Places
+                  <input name="nb_places" type="number" value={form.nb_places} onChange={handleChange} required />
+                </label>
+                <label className={styles.formField}>
+                  Portes
+                  <input name="nb_portes" type="number" value={form.nb_portes} onChange={handleChange} required />
+                </label>
+                <label className={styles.formField}>
+                  Cylindres
+                  <input name="nb_cylindres" type="number" value={form.nb_cylindres} onChange={handleChange} required />
+                </label>
+                <label className={styles.formField}>
+                  Kilometrage
+                  <input name="kilometrage" type="number" value={form.kilometrage} onChange={handleChange} required />
+                </label>
+                {form.vehicle_type === 'sale' ? (
+                  <>
+                    <label className={styles.formField}>
+                      Prix de vente
+                      <input name="prix_vente" type="number" step="0.01" value={form.prix_vente} onChange={handleChange} required />
+                    </label>
+                    <label className={styles.formFieldCheckbox}>
+                      <input name="negociable" type="checkbox" checked={form.negociable} onChange={handleChange} />
+                      Négociable
+                    </label>
+                  </>
+                ) : (
+                  <>
+                    <label className={styles.formField}>
+                      Prix par jour
+                      <input name="prix_par_jour" type="number" step="0.01" value={form.prix_par_jour} onChange={handleChange} required />
+                    </label>
+                    <label className={styles.formField}>
+                      Caution
+                      <input name="caution" type="number" step="0.01" value={form.caution} onChange={handleChange} required />
+                    </label>
+                  </>
+                )}
+                <label className={styles.formField}>
+                  Description
+                  <textarea name="description" value={form.description} onChange={handleChange} required />
+                </label>
+                <label className={styles.formField}>
+                  Image URL
+                  <input name="image" value={form.image} onChange={handleChange} required />
+                </label>
+                {message.error && <div className={styles.messageError}>{message.error}</div>}
+                {message.success && <div className={styles.messageSuccess}>{message.success}</div>}
+                <div className={styles.formActions}>
+                  <button className={styles.btnPrimary} type="submit">
+                    {editing ? 'Update vehicle' : 'Add vehicle'}
+                  </button>
+                  {editing && (
+                    <button type="button" className={styles.btnOutline} onClick={resetForm}>
+                      Cancel
+                    </button>
+                  )}
+                </div>
+              </form>
+            </div>
+          </section>
+        )}
+
+        <section className={styles.vehiclesSection}>
+          <h2>{tab === 'sales' ? 'Sale vehicles' : 'Rental vehicles'}</h2>
+          {loading ? (
+            <p className={styles.loadingText}>Loading...</p>
+          ) : vehicleList.length === 0 ? (
+            <p className={styles.emptyText}>No vehicles found. Add one to get started!</p>
+          ) : (
+            <div className={styles.vehiclesGrid}>
+              {vehicleList.map((vehicle) => (
+                <div key={vehicle.matricule} className={styles.vehicleCard}>
+                  <div className={styles.vehicleImageContainer}>
+                    <img src={vehicle.image} alt={`${vehicle.marque} ${vehicle.modele}`} className={styles.vehicleImage} />
+                  </div>
+                  <div className={styles.vehicleInfo}>
+                    <h3 className={styles.vehicleName}>{vehicle.marque} {vehicle.modele}</h3>
+                    <p className={styles.vehicleMatricule}>{vehicle.matricule}</p>
+                    <div className={styles.vehiclePrice}>
+                      {tab === 'sales' ? (
+                        <>
+                          <span className={styles.price}>${vehicle.prix_vente}</span>
+                          {vehicle.negociable && <span className={styles.negotiable}>Négociable</span>}
+                        </>
+                      ) : (
+                        <span className={styles.price}>${vehicle.prix_par_jour}/day</span>
+                      )}
+                    </div>
+                    <div className={styles.vehicleActions}>
+                      <button 
+                        className={styles.detailsButton} 
+                        onClick={() => setExpandedVehicle(expandedVehicle === vehicle.matricule ? null : vehicle.matricule)}
+                      >
+                        {expandedVehicle === vehicle.matricule ? 'Hide Details' : 'Get Details'}
+                      </button>
+                      <button className={styles.editButton} onClick={() => handleEdit(vehicle, tab === 'sales' ? 'sale' : 'rent')}>
+                        Edit
+                      </button>
+                      <button className={styles.deleteButton} onClick={() => handleDelete(vehicle.matricule)}>
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+
+                  {expandedVehicle === vehicle.matricule && (
+                    <div className={styles.vehicleDetails}>
+                      <div className={styles.detailsGrid}>
+                        <div className={styles.detailItem}>
+                          <span className={styles.detailLabel}>Type:</span>
+                          <span className={styles.detailValue}>{vehicle.type}</span>
+                        </div>
+                        <div className={styles.detailItem}>
+                          <span className={styles.detailLabel}>Year:</span>
+                          <span className={styles.detailValue}>{vehicle.annee}</span>
+                        </div>
+                        <div className={styles.detailItem}>
+                          <span className={styles.detailLabel}>Fuel:</span>
+                          <span className={styles.detailValue}>{vehicle.carburant}</span>
+                        </div>
+                        <div className={styles.detailItem}>
+                          <span className={styles.detailLabel}>Color:</span>
+                          <span className={styles.detailValue}>{vehicle.couleur}</span>
+                        </div>
+                        <div className={styles.detailItem}>
+                          <span className={styles.detailLabel}>Seats:</span>
+                          <span className={styles.detailValue}>{vehicle.nb_places}</span>
+                        </div>
+                        <div className={styles.detailItem}>
+                          <span className={styles.detailLabel}>Doors:</span>
+                          <span className={styles.detailValue}>{vehicle.nb_portes}</span>
+                        </div>
+                        <div className={styles.detailItem}>
+                          <span className={styles.detailLabel}>Cylinders:</span>
+                          <span className={styles.detailValue}>{vehicle.nb_cylindres}</span>
+                        </div>
+                        <div className={styles.detailItem}>
+                          <span className={styles.detailLabel}>Mileage:</span>
+                          <span className={styles.detailValue}>{vehicle.kilometrage} km</span>
+                        </div>
+                        {tab === 'rentals' && (
+                          <div className={styles.detailItem}>
+                            <span className={styles.detailLabel}>Deposit:</span>
+                            <span className={styles.detailValue}>${vehicle.caution}</span>
+                          </div>
+                        )}
+                      </div>
+                      <div className={styles.descriptionContainer}>
+                        <p className={styles.detailLabel}>Description:</p>
+                        <p className={styles.description}>{vehicle.description}</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          )}
         </section>
       </>
     );
-  }, [company, editing, form, message.error, message.success, tab, vehicles.rentals.length, vehicles.sales.length]);
+  }, [company, editing, form, message.error, message.success, tab, vehicles, showForm, expandedVehicle]);
 
   return (
     <>
