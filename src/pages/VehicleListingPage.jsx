@@ -2,75 +2,32 @@ import { useState, useEffect } from 'react';
 import NavBar from '../layouts/NavBar'; // Assurez-vous que le chemin est correct
 import VehicleCard from '../component/VehicleCard'; // Assurez-vous que le chemin est correct
 import './VehicleListingPage.css';
+import { getVehicles } from '../api/vehicleAPI';
 
 export default function VehicleListingPage({ type }) {
   const isRental = type === 'rent';  
   
-  // fishier test
-  const rentalVehicles = [
-    {
-      id: 1,
-      marque: 'Toyota',
-      modele: 'Corolla',
-      annee: 2022,
-      carburant: 'Essence',
-      nb_places: 5,
-      nb_portes: 4,
-      kilometrage: 25000,
-      type: 'Sedan',
-      description: 'Véhicule en excellent état, bien entretenu, idéal pour la ville.',
-      image: 'https://images.unsplash.com/photo-1552820728-8ac41f1ce891?w=400&h=300&fit=crop',
-      prix_par_jour: 85,
-    },
-    {
-      id: 2,
-      marque: 'Renault',
-      modele: 'Clio',
-      annee: 2023,
-      carburant: 'Essence',
-      nb_places: 5,
-      nb_portes: 5,
-      kilometrage: 12000,
-      type: 'Berline',
-      description: 'Voiture compacte et économique pour vos déplacements quotidiens.',
-      image: 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=400&h=300&fit=crop',
-      prix_par_jour: 75,
-    },
-  ];
 
-  const saleVehicles = [
-    {
-      id: 3,
-      marque: 'Peugeot',
-      modele: '308',
-      annee: 2021,
-      carburant: 'Diesel',
-      nb_places: 5,
-      nb_portes: 5,
-      kilometrage: 35000,
-      type: 'Berline',
-      description: 'Confortable et économique, bien entretenue par un seul propriétaire.',
-      image: 'https://images.unsplash.com/photo-1494976866554-6d52da5d7840?w=400&h=300&fit=crop',
-      prix_vente: 24500,
-    },
-    {
-      id: 4,
-      marque: 'Hyundai',
-      modele: 'i20',
-      annee: 2020,
-      carburant: 'Essence',
-      nb_places: 5,
-      nb_portes: 5,
-      kilometrage: 45000,
-      type: 'Citadine', // Type changé pour tester le filtre
-      description: 'Fiable et économique, premier propriétaire, contrôle technique OK.',
-      image: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?w=400&h=300&fit=crop',
-      prix_vente: 18500,
-    },
-  ];
+  const [vehicules, setVehicules] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true); // Début du chargement
+      setError('');
+      try {
+        const data = await getVehicles(type);
+        // Sécurité si data est null ou pas un tableau
+        setVehicules(Array.isArray(data) ? data : []);
+      } catch (err) {
+        console.error("erreur", err);
+        setError("Impossible de charger les véhicules.");
+      } finally {
+        setLoading(false); // Fin du chargement (succès ou erreur)
+      }
+    };
 
-  // État
-  const [vehicles, setVehicles] = useState(isRental ? rentalVehicles : saleVehicles);
+    fetchData();
+  }, [type]);
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   
@@ -87,12 +44,6 @@ export default function VehicleListingPage({ type }) {
   const pageSubtitle = isRental
     ? 'Trouvez votre voiture idéale à louer'
     : 'Découvrez nos voitures à vendre';
-
-  useEffect(() => {
-    setVehicles(isRental ? rentalVehicles : saleVehicles);
-    setFilters({ marque: '', type: '', carburant: '', priceMin: '', priceMax: '' }); // Reset filtres
-  }, [type]);
-
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters((prev) => ({
@@ -100,25 +51,6 @@ export default function VehicleListingPage({ type }) {
       [name]: value,
     }));
   };
-
-  // Logique de filtrage
-  const filteredVehicles = vehicles.filter((vehicle) => {
-    // Filtre marque
-    if (filters.marque && !vehicle.marque.toLowerCase().includes(filters.marque.toLowerCase())) {
-      return false;
-    }
-    // Filtre type
-    if (filters.type && vehicle.type !== filters.type) return false;
-    // Filtre carburant
-    if (filters.carburant && vehicle.carburant !== filters.carburant) return false;
-    
-    // Filtres prix
-    const price = isRental ? vehicle.prix_par_jour : vehicle.prix_vente;
-    if (filters.priceMin && price < Number(filters.priceMin)) return false;
-    if (filters.priceMax && price > Number(filters.priceMax)) return false;
-    
-    return true;
-  });
 
   return (
     <>
@@ -216,13 +148,9 @@ export default function VehicleListingPage({ type }) {
               <div className="loading">Chargement des véhicules...</div>
             ) : error ? (
               <div className="error-message">{error}</div>
-            ) : filteredVehicles.length === 0 ? (
-              <div className="no-vehicles">
-                <p>Aucun véhicule ne correspond à vos critères</p>
-              </div>
             ) : (
               <div className="vehicles-grid">
-                {filteredVehicles.map((vehicle) => (
+                {vehicules.map((vehicle) => (
                   <VehicleCard key={vehicle.id} vehicle={vehicle} type={type} />
                 ))}
               </div>

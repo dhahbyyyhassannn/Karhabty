@@ -5,9 +5,9 @@ use App\Models\VehiculeLocation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class VehicleLocationController extends Controller
+class VehiculeLocationController extends Controller
 {
-    public function addVehicleLocation(Request $request)
+    public function addVehiculeLocation(Request $request)
     {
         $validated = $request->validate([
             'matricule' => 'required',
@@ -47,5 +47,9 @@ class VehicleLocationController extends Controller
         return response()->json([
             'message' => 'vehicle location added successfully',
         ], 201);
+    }
+    public function allVehiculesLocation() {
+        $vehicleLocation = VehiculeLocation::all();
+        return response()->json($vehicleLocation);
     }
 }

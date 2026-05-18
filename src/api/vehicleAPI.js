@@ -13,14 +13,12 @@ export async function addVehicleForSale(vehicleData) {
     return response.data;
 }
 
-export async function getRentalVehicles() {
-    const response = await axios.get(`${url}api/vehicles/rentals`);
-    return response.data;
-}
-
-export async function getSaleVehicles() {
-    const response = await axios.get(`${url}api/vehicles/sales`);
-    return response.data;
+export async function getVehicles(mode) {
+  // On choisit le bon endpoint selon le mode ('rent' ou 'sell')
+  const endpoint = mode === 'rent' ? 'allVehiculesLocation' : 'allVehiculesVente';
+  
+  const response = await axios.get(`${url}api/${endpoint}`);
+  return response.data;
 }
 
 export async function getVehicleById(id) {

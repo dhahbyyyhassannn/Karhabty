@@ -2,18 +2,17 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\VehicleVenteController;
-use App\Http\Controllers\VehicleLocationController;
+use App\Http\Controllers\VehiculeVenteController;
+use App\Http\Controllers\VehiculeLocationController;
 use App\Http\Controllers\SocieteController;
 use App\Http\Controllers\AdminController;
 
 Route::post('/logIn', [UserController::class, 'logIn']);
 Route::post('/signIn', [UserController::class, 'addUser']);
-Route::middleware('auth:api')->post('/vehicles/addCar', [VehicleVenteController::class, 'addVehicle']);
-Route::middleware('auth:api')->post('/vehcles/addLocation/Car', [VehicleLocationController::class, 'addVehcileLocation']);
-Route::get('/test', function () {
-    return 'API Working';
-});
+Route::middleware('auth:api')->post('/vehicles/addCar', [VehiculeVenteController::class, 'addVehicule']);
+Route::middleware('auth:api')->post('/vehcles/addLocation/Car', [VehiculeLocationController::class, 'addVehiculeLocation']);
+Route::get('/allVehiculesLocation', [VehiculeLocationController::class, 'allVehiculesLocation']);
+Route::get('/allVehiculesVente', [VehiculeVenteController::class, 'allVehiculesVente']);
 
 // Societe routes
 Route::get('/societes', [SocieteController::class, 'index']);

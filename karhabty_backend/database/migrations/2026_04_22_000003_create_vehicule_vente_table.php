@@ -28,8 +28,7 @@ return new class extends Migration
             $table->float('prix_vente', 6);
             $table->boolean('negociable')->default(false);
             $table->boolean('disponible')->default('true');
-            $table->string('user_id');
-            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
+            $table->foreignId('societe_id')->constrained('societes')->onDelete('cascade');
             $table->timestamps();
         });
     }

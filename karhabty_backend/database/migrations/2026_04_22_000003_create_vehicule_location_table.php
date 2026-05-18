@@ -29,8 +29,7 @@ return new class extends Migration
             $table->float('caution', 6);
             $table->string('disponibilite')->default('disponible');
             $table->timestamps();
-            $table->string('user_id');
-            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
+           $table->foreignId('societe_id')->constrained('societes')->onDelete('cascade');
         });
     }
 
